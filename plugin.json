@@ -1,14 +1,14 @@
 {
-  "name": "plugin-sample-vite-svelte",
-  "author": "frostime",
-  "url": "https://github.com/siyuan-note/plugin-sample-vite-svelte",
-  "version": "0.1.8",
-  "minAppVersion": "2.9.0",
+  "name": "siyuan-plugin-workflow",
+  "author": "zxhd863943427",
+  "url": "https://github.com/zxhd863943427/siyuan-plugin-workflow",
+  "version": "0.0.1",
+  "minAppVersion": "2.9.4",
   "backends": ["all"],
   "frontends": ["all"],
   "displayName": {
     "en_US": "Plugin sample with vite and svelte",
-    "zh_CN": "插件样例 vite + svelte 版"
+    "zh_CN": "思源的工作流框架"
   },
   "description": {
     "en_US": "SiYuan plugin sample with vite and svelte",
@@ -20,7 +20,7 @@
   },
   "funding": {
     "custom": [
-      "https://afdian.net/a/frostime"
+      "https://afdian.net/a/zxhd86"
     ]
   }
 }
