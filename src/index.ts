@@ -23,7 +23,7 @@ const STORAGE_NAME = "menu-config";
 const TAB_TYPE = "custom_tab";
 const DOCK_TYPE = "dock_tab";
 
-export default class PluginSample extends Plugin {
+export default class PluginWorkflow extends Plugin {
 
     private customTab: () => IModel;
     private isMobile: boolean;
