@@ -2,6 +2,7 @@
  * Copyright (c) 2023 frostime. All rights reserved.
  */
 
+import { Protyle } from "siyuan";
 /**
  * Frequently used data structures in SiYuan
  */
@@ -63,4 +64,32 @@ type doOperation = {
     parentID: BlockId | DocumentId;
     previousID: BlockId;
     retData: null;
+}
+
+type Searcher = string
+
+interface Watcher {
+    (wsDetail:any): number;
+}
+interface Grouper {
+    (blockList:Array<Block>):Map<string,Array<Block>>
+}
+
+interface Initer {
+    (searcher:Searcher)
+}
+
+type Switcher = {
+    filter: string[],
+    id: string
+    callback(protyle: Protyle): void
+}[]
+
+type WorkFlow ={
+    watcher:Watcher,
+    operator:Array<Function>,
+    searcher:Searcher,
+    grouper:Grouper,
+    initer:Initer,
+    switcherList:Switcher
 }
