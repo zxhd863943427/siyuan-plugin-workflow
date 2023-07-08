@@ -1,6 +1,7 @@
 import zh_Hans from "./i18n/zh_CN.json";
 import en_US from "./i18n/en_US.json";
 import { App, Plugin } from "siyuan";
+import { WorkFlow } from "./types";
 
 //@ts-ignore
 export const lute = window.Lute!.New();
@@ -53,4 +54,9 @@ export function setApp(app_: App) {
 export let plugin: Plugin;
 export function setPlugin(plugin_: Plugin) {
     plugin = plugin_;
+}
+
+export let workflow: WorkFlow;
+export function setWorkFlow(workflow_: WorkFlow) {
+    workflow = workflow_;
 }
