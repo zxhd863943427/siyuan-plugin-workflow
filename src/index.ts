@@ -13,11 +13,16 @@ import {
     fetchPost,
     Protyle
 } from "siyuan";
+import siyuan from "siyuan";
 import "@/index.scss";
-import { info, setApp, setI18n, setIsMobile, setPlugin } from './utils';
+import { info, plugin, setApp, setI18n, setIsMobile, setPlugin, setWorkFlow, workflow } from './utils';
+import { workflowApi } from "./workflowApi";
 
 import HelloExample from "@/hello.svelte";
 import SettingPannel from "@/libs/setting-panel.svelte";
+import { reSolveWorkflow } from "./func/resolve";
+import { todoWorkFlow } from "./workflow/todo";
+import { sql } from "./api";
 
 const STORAGE_NAME = "menu-config";
 const TAB_TYPE = "custom_tab";
@@ -30,6 +35,7 @@ export default class PluginWorkflow extends Plugin {
 
     async onload() {
         info('workflow Plugin load');
+        setWorkFlow(todoWorkFlow)
 
         this.data[STORAGE_NAME] = {readonlyText: "Readonly"};
 
@@ -64,13 +70,35 @@ export default class PluginWorkflow extends Plugin {
             }
         });
 
+        // this.eventBus.on("ws-main",this.eventBusLog)
+        this.eventBus.on("ws-main",this.mainEvent)
 
     }
 
     onLayoutReady() {
         this.loadData(STORAGE_NAME);
         console.log(`frontend: ${getFrontend()}; backend: ${getBackend()}`);
-
+        this.protyleSlash = workflow.switcherList
+        this.addDock({
+            config: {
+                position: "LeftBottom",
+                size: {width: 200, height: 0},
+                icon: "iconSaving",
+                title: "Custom Dock",
+            },
+            data: {
+                text: "This is my custom dock"
+            },
+            type: DOCK_TYPE,
+            async init() {
+                let blockList = await sql(workflow.searcher)
+                let grouped = workflow.grouper(blockList,workflowApi)
+                console.log(grouped)
+            },
+            destroy() {
+                console.log("destroy dock:", DOCK_TYPE);
+            }
+        });
     }
 
     onunload() {
@@ -101,5 +129,11 @@ export default class PluginWorkflow extends Plugin {
     private eventBusLog({detail}: any) {
         console.log(detail);
     }
-
+    private mainEvent({detail}: any) {
+        if (detail.cmd === "transactions"){
+            let operatorIndex = workflow.watcher(detail,workflowApi);
+            let customOperator = workflow.operator[operatorIndex];
+            customOperator(detail,workflowApi)
+        }
+    }
 }

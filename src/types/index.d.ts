@@ -52,7 +52,7 @@ type Block = {
     length: number;
     type: BlockType;
     subtype: BlockSubType;
-    ial?: { [key: string]: string };
+    ial?: string;
     sort: number;
     created: string;
     updated: string;
@@ -70,14 +70,14 @@ type doOperation = {
 type Searcher = string
 
 interface Watcher {
-    (wsDetail:any,api:any): number;
+    (wsDetail:any,api:WorkFlowApi): number;
 }
 interface Grouper {
-    (blockList:Array<Block>,api:any):Map<string,Array<Block>>
+    (blockList:Array<Block>,api:WorkFlowApi):Partial<Record<any, Block[]>>
 }
 
 interface Initer {
-    (searcher:Searcher,api:any)
+    (searcher:Searcher,api:WorkFlowApi)
 }
 
 type Switcher = {
@@ -95,3 +95,8 @@ type WorkFlow ={
     initer:Initer,
     switcherList:Switcher
 }
+
+type WorkFlowApi = { sql:Function, 
+    getBlockAttrs:Function,
+    setBlockAttrs:Function,
+    newNodeID:()=>string }
