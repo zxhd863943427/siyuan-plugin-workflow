@@ -23,6 +23,7 @@ import SettingPannel from "@/libs/setting-panel.svelte";
 import { reSolveWorkflow } from "./func/resolve";
 import { todoWorkFlow } from "./workflow/todo";
 import { sql } from "./api";
+import { getProtyleCurrentElement } from "./workflow/utils";
 
 const STORAGE_NAME = "menu-config";
 const TAB_TYPE = "custom_tab";
@@ -72,13 +73,23 @@ export default class PluginWorkflow extends Plugin {
 
         // this.eventBus.on("ws-main",this.eventBusLog)
         this.eventBus.on("ws-main",this.mainEvent)
+        console.log("start")
+
 
     }
 
     onLayoutReady() {
         this.loadData(STORAGE_NAME);
         console.log(`frontend: ${getFrontend()}; backend: ${getBackend()}`);
-        this.protyleSlash = workflow.switcherList
+        this.protyleSlash = [{
+            filter: ["insert emoji 😊", "插入表情 😊", "crbqwx"],
+            html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${this.i18n.insertEmoji}</span><span class="b3-list-item__meta">😊</span></div>`,
+            id: "insertEmoji",
+            callback(protyle: Protyle) {
+                protyle.insert("😊");
+                console.log(getProtyleCurrentElement(protyle))
+            }
+        }];
         this.addDock({
             config: {
                 position: "LeftBottom",

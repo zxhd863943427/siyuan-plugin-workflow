@@ -100,3 +100,43 @@ type WorkFlowApi = { sql:Function,
     getBlockAttrs:Function,
     setBlockAttrs:Function,
     newNodeID:()=>string }
+
+interface IProtyle {
+    getInstance: () => import("../protyle").Protyle,
+    app: import("../index").App,
+    transactionTime: number,
+    id: string,
+    block: {
+        id?: string,
+        scroll?: boolean
+        parentID?: string,
+        parent2ID?: string,
+        rootID?: string,
+        showAll?: boolean
+        mode?: number
+        blockCount?: number
+        action?: string[]
+    },
+    disabled: boolean,
+    selectElement?: HTMLElement,
+    ws?: import("../layout/Model").Model,
+    notebookId?: string
+    path?: string
+    model?: import("../../src/editor").Editor,
+    updated: boolean;
+    element: HTMLElement;
+    scroll?: import("../protyle/scroll").Scroll,
+    gutter?: import("../protyle/gutter").Gutter,
+    breadcrumb?: import("../protyle/breadcrumb").Breadcrumb,
+    title?: import("../protyle/header/Title").Title,
+    background?: import("../protyle/header/background").Background,
+    contentElement?: HTMLElement,
+    options: IOptions;
+    lute?: Lute;
+    toolbar?: import("../protyle/toolbar").Toolbar,
+    preview?: import("../protyle/preview").Preview;
+    hint?: import("../protyle/hint").Hint;
+    upload?: import("../protyle/upload").Upload;
+    undo?: import("../protyle/undo").Undo;
+    wysiwyg?: import("../protyle/wysiwyg").WYSIWYG
+}
