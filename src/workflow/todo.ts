@@ -35,6 +35,9 @@ let watcher:Watcher = function (wsDetail,api):number{
         return 0
     }
     let element = getElementById(dataId)
+    if (!element){
+        return 0
+    }
     let attr = element.getAttribute("custom-workflow")
     if (!attr){
         return 0
