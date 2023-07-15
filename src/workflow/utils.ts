@@ -1,5 +1,8 @@
 import { Protyle } from "siyuan"
 import { IProtyle } from "@/types"
+import { fetchSyncPost } from "siyuan"
+import { sql, updateBlock } from "@/api"
+import { error } from "@/utils"
 export let Lute = globalThis.Lute
 
 export function getParentElementById(dataId:string):Element|null{
@@ -112,3 +115,22 @@ export function getProtyleCurrentElement(protyle:Protyle){
     return blockElement
 }
 
+async function queryMd(id:string) {
+    let md = await fetchSyncPost("/api/query/sql", {
+        "stmt": `SELECT markdown FROM blocks WHERE id ='${id}'`
+    })
+    if (md.code === 0 && md.data.length != 0) {
+        return md.data[0]
+    }
+    return null
+}
+
+export async function turnIntoTask(id:string){
+    let query = await queryMd(id)
+    if (!query){
+        error(`未能找到的 ${id} 的markdown内容`)
+        return
+    }
+    let md = "* [ ] "+query.markdown
+    updateBlock("markdown",md,id)
+}
