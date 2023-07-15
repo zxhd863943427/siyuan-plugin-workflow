@@ -1,5 +1,4 @@
 import { Protyle } from "siyuan"
-import { IProtyle } from "@/types"
 import { fetchSyncPost } from "siyuan"
 import { sql, updateBlock } from "@/api"
 import { error } from "@/utils"
@@ -133,4 +132,9 @@ export async function turnIntoTask(id:string){
     }
     let md = "* [ ] "+query.markdown
     updateBlock("markdown",md,id)
+}
+
+export function getProtyleElementById(protyle:Protyle,dataId:string){
+    let sourceElement = protyle.protyle.wysiwyg.element.querySelector(`div[data-node-id="${dataId}"][data-type]`)
+    return sourceElement
 }
