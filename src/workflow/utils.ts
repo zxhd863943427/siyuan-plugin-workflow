@@ -173,6 +173,6 @@ export function switchToUnFinish(workElement:HTMLElement){
     }
 }
 export let status = writable(0)
-export function updateDock(){
-    setTimeout(()=>{status.update(n=>n+1)},5000)
+export function updateDock(timeOut=2500){
+    setTimeout(()=>{status.update(n=>n+1)},timeOut)
 }

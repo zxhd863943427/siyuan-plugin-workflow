@@ -4,7 +4,9 @@ import { getProtyleCurrentElement,turnIntoTask,getProtyleElementById,updateDock 
 export let workflowApi = { 
     sql:sql, 
     getBlockAttrs:getBlockAttrs,
-    setBlockAttrs:setBlockAttrs,
+    setBlockAttrs:(id: BlockId, attrs: {
+        [key: string]: string;
+    })=>{setBlockAttrs(id,attrs),updateDock()},
     newNodeID:window.Lute.NewNodeID,
     getProtyleCurrentElement:getProtyleCurrentElement,
     turnIntoTask:turnIntoTask,
