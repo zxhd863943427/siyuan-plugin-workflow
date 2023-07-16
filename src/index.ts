@@ -20,6 +20,7 @@ import { workflowApi } from "./workflowApi";
 
 import SettingPannel from "@/libs/setting-panel.svelte";
 import { todoWorkFlow } from "./workflow/todo";
+import { allWorkFlow, workFlowOption } from "./allWorkFlow";
 
 import TaskPannel from "@/components/task-pannel.svelte";
 
@@ -76,8 +77,8 @@ export default class PluginWorkflow extends Plugin {
             config: {
                 position: "LeftBottom",
                 size: {width: 200, height: 0},
-                icon: "iconSaving",
-                title: "Custom Dock",
+                icon: "iconPlay",
+                title: "workflow",
             },
             data: {
                 text: "This is my custom dock"
@@ -111,7 +112,7 @@ export default class PluginWorkflow extends Plugin {
     openDIYSetting(): void {
         let dialog = new Dialog({
             title: "设置",
-            content: `<div id="SettingPanel"></div>`,
+            content: `<div id="workFlowSettingPanel"></div>`,
             width: "600px",
             destroyCallback: (options) => {
                 console.log("destroyCallback", options);
@@ -120,7 +121,11 @@ export default class PluginWorkflow extends Plugin {
             }
         });
         let pannel = new SettingPannel({
-            target: dialog.element.querySelector("#SettingPanel"),
+            target: dialog.element.querySelector("#workFlow"),
+            props:{
+                allWorkFlow:allWorkFlow,
+                option:workFlowOption
+            }
         });
     }
 

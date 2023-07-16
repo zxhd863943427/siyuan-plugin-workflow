@@ -1,19 +1,11 @@
 <script>
     import SettingItem from "./setting-item.svelte";
-    import { showMessage } from "siyuan";
-    import { onMount, onDestroy } from 'svelte';
     import { setWorkFlow } from '@/utils';
     import { todoWorkFlow } from "@/workflow/todo";
     export let allWorkFlow={todo:todoWorkFlow};
     export let option={
             todo: "todo"
         };
-    onMount(() => {
-        showMessage("Setting panel opened");
-    });
-    onDestroy(() => {
-        showMessage("Setting panel closed");
-    });
 </script>
 
 <!--
@@ -25,8 +17,8 @@ with the same UI style in SiYuan
 
     <SettingItem
         type="select"
-        title="Select"
-        text="This is a select"
+        title="工作流"
+        text="选中当前使用的工作流"
         settingKey="Select"
         settingValue="todo"
         options={option}
