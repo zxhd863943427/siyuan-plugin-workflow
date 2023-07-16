@@ -4,6 +4,7 @@ import { sql, updateBlock } from "@/api"
 import { error } from "@/utils"
 export let Lute = globalThis.Lute
 
+import { transaction, turnsIntoOneTransaction } from "./transaction"
 export function getParentElementById(dataId:string):Element|null{
     // let currentPage = getCurrentPage()
     let sourceElement = document.querySelector(`[data-node-id][data-type]:has(>div[data-node-id="${dataId}"][data-type])`)
@@ -124,17 +125,25 @@ async function queryMd(id:string) {
     return null
 }
 
-export async function turnIntoTask(id:string){
-    let query = await queryMd(id)
-    if (!query){
-        error(`未能找到的 ${id} 的markdown内容`)
-        return
-    }
-    let md = "* [ ] "+query.markdown
-    updateBlock("markdown",md,id)
+export async function turnIntoTask(sourceProtyle:Protyle, element:HTMLElement){
+    // let query = await queryMd(id)
+    // if (!query){
+    //     error(`未能找到的 ${id} 的markdown内容`)
+    //     return
+    // }
+    // let md = "* [ ] "+query.markdown
+    // updateBlock("markdown",md,id)
+    let protyle = sourceProtyle.protyle
+    let selectsElement = [element]
+    turnsIntoOneTransaction({
+        protyle,
+        selectsElement,
+        type: "Blocks2TLs"
+    })
 }
 
 export function getProtyleElementById(protyle:Protyle,dataId:string){
     let sourceElement = protyle.protyle.wysiwyg.element.querySelector(`div[data-node-id="${dataId}"][data-type]`)
     return sourceElement
 }
+

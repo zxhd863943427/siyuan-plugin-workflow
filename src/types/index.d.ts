@@ -99,7 +99,10 @@ type WorkFlow ={
 type WorkFlowApi = { sql:Function, 
     getBlockAttrs:Function,
     setBlockAttrs:Function,
-    newNodeID:()=>string }
+    newNodeID:()=>string,
+    getProtyleCurrentElement:Function,
+    turnIntoTask:Function,
+    getProtyleElementById:Function}
 
 interface IProtyle {
     getInstance: () => import("../protyle").Protyle,
@@ -140,3 +143,20 @@ interface IProtyle {
     undo?: import("../protyle/undo").Undo;
     wysiwyg?: import("../protyle/wysiwyg").WYSIWYG
 }
+
+interface IOperation {
+    action: TOperation, // move， delete 不需要传 data
+    id?: string,
+    data?: any, // updateAttr 时为  { old: IObject, new: IObject }, updateAttrViewCell 时为 {TAVCol: {content: string}}
+    parentID?: string   // 为 insertAttrViewBlock 传 avid
+    previousID?: string
+    retData?: any
+    nextID?: string // insert 专享
+    srcIDs?: string[] // insertAttrViewBlock 专享
+    name?: string // addAttrViewCol 专享
+    type?: TAVCol // addAttrViewCol 专享
+    rowID?: string // updateAttrViewCell 专享
+    deckID?: string // add/removeFlashcards 专享
+    blockIDs?: string[] // add/removeFlashcards 专享
+}
+
