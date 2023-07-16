@@ -37,8 +37,8 @@
 <div id="sevlte">
     <div class="block__icons">
         <div class="block__logo">
-            <svg><use xlink:href="#iconEmoji" /></svg>
-            Custom Dock
+            <svg><use xlink:href="#iconHistory" /></svg>
+            workflow
         </div>
         <span class="fn__flex-1 fn__space" />
         <button
