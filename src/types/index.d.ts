@@ -93,7 +93,8 @@ type WorkFlow ={
     searcher:Searcher,
     grouper:Grouper,
     initer:Initer,
-    switcherList:Switcher
+    switcherList:Switcher,
+    workFlowOrder?:string[]
 }
 
 type WorkFlowApi = { sql:Function, 

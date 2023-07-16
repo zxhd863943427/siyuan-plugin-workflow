@@ -29,6 +29,9 @@
             workflowApi
         );
     }
+    function getWorkFlowGroupKeyList(grouped){
+        return workFlow.workFlowOrder? workFlow.workFlowOrder:Object.keys(grouped)
+    }
 </script>
 
 <div id="sevlte">
@@ -54,8 +57,8 @@
     {#await groupedPromise}
         <p>loading...</p>
     {:then grouped}
-        {#each Object.keys(grouped) as groupKey}
-            <Block workflowType={groupKey} blockList={grouped[groupKey]} />
+        {#each getWorkFlowGroupKeyList(grouped) as groupKey}
+            <Block workflowType={groupKey} blockList={grouped[groupKey] ? grouped[groupKey] : []} />
         {/each}
     {/await}
 </div>

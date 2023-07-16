@@ -194,5 +194,6 @@ export let todoWorkFlow:WorkFlow ={
         reSolveSwitcherFunction(ToDo,workflowApi),
         reSolveSwitcherFunction(Doing,workflowApi),
         reSolveSwitcherFunction(Done,workflowApi),
-        reSolveSwitcherFunction(Delete,workflowApi)]
+        reSolveSwitcherFunction(Delete,workflowApi)],
+    workFlowOrder:["doing","todo","done"]
 }
