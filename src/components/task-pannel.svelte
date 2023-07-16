@@ -45,7 +45,6 @@
         <p>loading...</p>
     {:then grouped}
         {#each Object.keys(grouped) as groupKey}
-            <p>{groupKey}</p>
             <Block workflowType={groupKey} blockList={grouped[groupKey]} />
         {/each}
     {/await}
