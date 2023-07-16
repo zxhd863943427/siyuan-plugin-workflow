@@ -43,7 +43,6 @@ export default class PluginWorkflow extends Plugin {
         console.log("loading plugin-sample", this.i18n);
 
         const frontEnd = getFrontend();
-        this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile";
 
 
         this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile";
@@ -70,7 +69,16 @@ export default class PluginWorkflow extends Plugin {
                 this.openDIYSetting()
             }
         });
-
+        this.protyleSlash = [{
+            filter: ["insert emoji 😊", "插入表情 😊", "crbqwx"],
+            html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${this.i18n.insertEmoji}</span><span class="b3-list-item__meta">😊</span></div>`,
+            id: "insertEmoji",
+            callback(protyle: Protyle) {
+                protyle.insert("😊");
+                console.log(getProtyleCurrentElement(protyle))
+            }
+        }];
+        this.protyleSlash = workflow.switcherList
         // this.eventBus.on("ws-main",this.eventBusLog)
         this.eventBus.on("ws-main",this.mainEvent)
         console.log("start")
@@ -81,15 +89,7 @@ export default class PluginWorkflow extends Plugin {
     onLayoutReady() {
         this.loadData(STORAGE_NAME);
         console.log(`frontend: ${getFrontend()}; backend: ${getBackend()}`);
-        this.protyleSlash = [{
-            filter: ["insert emoji 😊", "插入表情 😊", "crbqwx"],
-            html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${this.i18n.insertEmoji}</span><span class="b3-list-item__meta">😊</span></div>`,
-            id: "insertEmoji",
-            callback(protyle: Protyle) {
-                protyle.insert("😊");
-                console.log(getProtyleCurrentElement(protyle))
-            }
-        }];
+
         this.addDock({
             config: {
                 position: "LeftBottom",

@@ -5,6 +5,7 @@ import { error } from "@/utils"
 export let Lute = globalThis.Lute
 
 import { transaction, turnsIntoOneTransaction } from "./transaction"
+import { WorkFlowApi } from "@/types"
 export function getParentElementById(dataId:string):Element|null{
     // let currentPage = getCurrentPage()
     let sourceElement = document.querySelector(`[data-node-id][data-type]:has(>div[data-node-id="${dataId}"][data-type])`)
@@ -147,3 +148,26 @@ export function getProtyleElementById(protyle:Protyle,dataId:string){
     return sourceElement
 }
 
+export function reSolveSwitcherFunction(switcherFunc:Function,workflowApi:WorkFlowApi){
+    return {
+        filter: [`${switcherFunc.name}WorkFlow`.toLowerCase()],
+        html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${switcherFunc.name}</span><span class="b3-list-item__meta">WorkFlow</span></div>`,
+        id: `${switcherFunc.name}WorkFlow`,
+        async callback(protyle: Protyle) {
+            // await protyle.insert("ToDo")
+            switcherFunc(protyle,workflowApi)
+        }
+    }
+}
+
+export function switchToFinish(workElement:HTMLElement){
+    if (!workElement.classList.contains("protyle-task--done")){
+        (workElement.querySelector(":scope > div.protyle-action.protyle-action--task") as HTMLElement).click()
+    }
+}
+
+export function switchToUnFinish(workElement:HTMLElement){
+    if (workElement.classList.contains("protyle-task--done")){
+        (workElement.querySelector(":scope > div.protyle-action.protyle-action--task") as HTMLElement).click()
+    }
+}

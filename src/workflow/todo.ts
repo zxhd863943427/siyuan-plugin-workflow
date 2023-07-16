@@ -7,10 +7,13 @@ import {
     WorkFlowApi,
     Block
 } from "@/types/index"
-import { getDataNodeId, getElementById, getParentElementById } from "./utils"
+import { getDataNodeId, getElementById, getParentElementById, reSolveSwitcherFunction, switchToFinish, switchToUnFinish } from "./utils"
+import { saveViaTransaction } from "./transaction"
 import { BlockList } from "net"
 
 import {groupBy} from "ramda"
+import { Protyle } from "siyuan"
+import { workflowApi } from "@/workflowApi"
 
 
 
@@ -18,6 +21,8 @@ type workflowAttr = {
     date:string,
     status:"todo"|"doing"|"done"|"delete",
 }
+
+
 
 let countain = document.createElement("div")
 function escape(str:string){
@@ -98,6 +103,77 @@ let grouper:Grouper = function(BlockList:Array<Block>,api):Partial<Record<"undef
     return grouped
 }
 
+function setWorkElementAttr(workElement: Element, api: WorkFlowApi, type: workflowAttr["status"]) {
+    let taskElementId = workElement.getAttribute("data-node-id")
+    let updateWorkFlowAttr: workflowAttr = {
+        date: api.newNodeID().slice(0, 8),
+        status: type
+    }
+    {setTimeout(()=>{api.setBlockAttrs(taskElementId, {
+        "custom-workflow": JSON.stringify(updateWorkFlowAttr)
+    })},2000)}
+}
+
+function getWorkElement(currentElement: Element, protyle: Protyle, api: WorkFlowApi) {
+    let id = currentElement.getAttribute("data-node-id")
+    let parentElement = currentElement.parentElement
+    let workElement: Element
+    if (!parentElement || parentElement.getAttribute("data-subtype") != "t") {
+        workflowApi.turnIntoTask(protyle, currentElement as HTMLElement)
+        workElement = api.getProtyleElementById(protyle, id).parentElement
+    }
+    else {
+        workElement = parentElement
+    }
+    return workElement
+}
+
+
+function ToDo(protyle:Protyle,api:WorkFlowApi){
+    let currentElement = workflowApi.getProtyleCurrentElement(protyle)
+    if (!currentElement){
+        return
+    }
+    // protyle.insert(`◇${type}`)
+    protyle.insert(`<span></span>`)
+    let workElement: Element = getWorkElement(currentElement, protyle, api)
+    switchToUnFinish(workElement as HTMLElement)
+    setWorkElementAttr(workElement, api, "todo")
+}
+function Doing(protyle:Protyle,api:WorkFlowApi){
+    let currentElement = workflowApi.getProtyleCurrentElement(protyle)
+    if (!currentElement){
+        return
+    }
+    // protyle.insert(`◇${type}`)
+    protyle.insert(`<span></span>`)
+    let workElement: Element = getWorkElement(currentElement, protyle, api)
+    switchToUnFinish(workElement as HTMLElement)
+    setWorkElementAttr(workElement, api, "doing")
+}
+
+function Done(protyle:Protyle,api:WorkFlowApi){
+    let currentElement = workflowApi.getProtyleCurrentElement(protyle)
+    if (!currentElement){
+        return
+    }
+    // protyle.insert(`◇${type}`)
+    protyle.insert(`<span></span>`)
+    let workElement: Element = getWorkElement(currentElement, protyle, api);
+    switchToFinish(workElement as HTMLElement)
+    setWorkElementAttr(workElement, api, "done")
+}
+function Delete(protyle:Protyle,api:WorkFlowApi){
+    let currentElement = workflowApi.getProtyleCurrentElement(protyle)
+    if (!currentElement){
+        return
+    }
+    // protyle.insert(`◇${type}`)
+    protyle.insert(`<span></span>`)
+    let workElement: Element = getWorkElement(currentElement, protyle, api);
+    switchToFinish(workElement as HTMLElement)
+    setWorkElementAttr(workElement, api, "delete")
+}
 
 export let todoWorkFlow:WorkFlow ={
     watcher:watcher,
@@ -114,5 +190,9 @@ export let todoWorkFlow:WorkFlow ={
     );`,
     grouper:grouper,
     initer:()=>{},
-    switcherList:[]
+    switcherList:[
+        reSolveSwitcherFunction(ToDo,workflowApi),
+        reSolveSwitcherFunction(Doing,workflowApi),
+        reSolveSwitcherFunction(Done,workflowApi),
+        reSolveSwitcherFunction(Delete,workflowApi)]
 }
