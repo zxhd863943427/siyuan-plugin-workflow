@@ -75,10 +75,11 @@ export default class PluginWorkflow extends Plugin {
 
         this.addDock({
             config: {
-                position: "LeftBottom",
+                position: "RightBottom",
                 size: {width: 200, height: 0},
                 icon: "iconPlay",
                 title: "workflow",
+                show:false
             },
             data: {
                 text: "This is my custom dock"
