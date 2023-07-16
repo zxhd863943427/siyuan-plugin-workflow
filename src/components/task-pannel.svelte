@@ -38,11 +38,11 @@
             Custom Dock
         </div>
         <span class="fn__flex-1 fn__space" />
-        <span
+        <button
             class="block__icon b3-tooltips b3-tooltips__sw"
             aria-label="刷新"
             on:click={update}
-            ><svg class=""><use xlink:href="#iconRefresh" /></svg></span
+            ><svg class=""><use xlink:href="#iconRefresh" /></svg></button
         >
         <span
             data-type="min"
