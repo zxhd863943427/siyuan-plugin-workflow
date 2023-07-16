@@ -24,6 +24,7 @@ import { reSolveWorkflow } from "./func/resolve";
 import { todoWorkFlow } from "./workflow/todo";
 import { sql } from "./api";
 import { getProtyleCurrentElement } from "./workflow/utils";
+import TaskPannel from "@/components/task-pannel.svelte";
 
 const STORAGE_NAME = "menu-config";
 const TAB_TYPE = "custom_tab";
@@ -69,15 +70,6 @@ export default class PluginWorkflow extends Plugin {
                 this.openDIYSetting()
             }
         });
-        this.protyleSlash = [{
-            filter: ["insert emoji 😊", "插入表情 😊", "crbqwx"],
-            html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${this.i18n.insertEmoji}</span><span class="b3-list-item__meta">😊</span></div>`,
-            id: "insertEmoji",
-            callback(protyle: Protyle) {
-                protyle.insert("😊");
-                console.log(getProtyleCurrentElement(protyle))
-            }
-        }];
         this.protyleSlash = workflow.switcherList
         // this.eventBus.on("ws-main",this.eventBusLog)
         this.eventBus.on("ws-main",this.mainEvent)
@@ -102,9 +94,14 @@ export default class PluginWorkflow extends Plugin {
             },
             type: DOCK_TYPE,
             async init() {
-                let blockList = await sql(workflow.searcher)
-                let grouped = workflow.grouper(blockList,workflowApi)
-                console.log(grouped)
+                // let blockList = await sql(workflow.searcher)
+                // let grouped = workflow.grouper(blockList,workflowApi)
+                // console.log(grouped)
+                this.element.innerHTML = `<div id="TaskPanel"></div>`
+                let panel = new TaskPannel({
+                    target: this.element.querySelector("#TaskPanel"),
+                    props:{workFlow:workflow}
+                })
             },
             destroy() {
                 console.log("destroy dock:", DOCK_TYPE);

@@ -86,7 +86,7 @@ let operator = [
 ]
 
 
-let re = /custom-workflow\s*=\s*"(\{.*\})"/
+let re = /custom-workflow\s*=\s*"((&#123;|\{).*(&#125;|\}))"/
 let groupFunc = groupBy((block:Block)=>{
     let match = re.exec(block.ial)
     if (!match){

@@ -24,3 +24,24 @@
         padding: 2px 8px;
     }
 }
+#TaskPanel{
+    .protyle{
+        min-height: 0px !important;
+    
+        .protyle-breadcrumb{
+            display: none;
+        }
+    
+        .protyle-wysiwyg{
+            padding: 0px !important;
+            }
+    }
+    
+    .block__icons.block__icons--menu{
+        min-height: 24px !important;
+        .fn__space.fn__flex-1.resize__move{
+            height: 24px;
+        }
+        display: none;
+    }
+}
