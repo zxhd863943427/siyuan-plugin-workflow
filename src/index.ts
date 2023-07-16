@@ -140,9 +140,13 @@ export default class PluginWorkflow extends Plugin {
     }
     private mainEvent({detail}: any) {
         if (detail.cmd === "transactions"){
-            let operatorIndex = workflow.watcher(detail,workflowApi);
+            setTimeout(doWorkflow,1500)
+        }
+
+        function doWorkflow() {
+            let operatorIndex = workflow.watcher(detail, workflowApi);
             let customOperator = workflow.operator[operatorIndex];
-            customOperator(detail,workflowApi)
+            customOperator(detail, workflowApi);
         }
     }
 }
