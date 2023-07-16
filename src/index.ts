@@ -110,7 +110,7 @@ export default class PluginWorkflow extends Plugin {
      */
     openDIYSetting(): void {
         let dialog = new Dialog({
-            title: "SettingPannel",
+            title: "设置",
             content: `<div id="SettingPanel"></div>`,
             width: "600px",
             destroyCallback: (options) => {
