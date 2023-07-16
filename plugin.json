@@ -7,12 +7,12 @@
   "backends": ["all"],
   "frontends": ["all"],
   "displayName": {
-    "en_US": "Plugin sample with vite and svelte",
-    "zh_CN": "思源的工作流框架"
+    "en_US": "Minimalist task management",
+    "zh_CN": "极简任务管理"
   },
   "description": {
-    "en_US": "SiYuan plugin sample with vite and svelte",
-    "zh_CN": "思源的工作流框架"
+    "en_US": "A Siyuan minimalist workflow framework that provides some simple task management functions",
+    "zh_CN": "一个思源的极简工作流框架，提供一些简单的任务管理功能"
   },
   "readme": {
     "en_US": "README.md",
