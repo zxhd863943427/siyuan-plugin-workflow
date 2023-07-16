@@ -149,11 +149,12 @@ export function getProtyleElementById(protyle:Protyle,dataId:string){
     return sourceElement
 }
 
-export function reSolveSwitcherFunction(switcherFunc:Function,workflowApi:WorkFlowApi){
+export function reSolveSwitcherFunction(switcherFunc:Function,workflowApi:WorkFlowApi,funcName:string|null=null){
+    let name = funcName?funcName:switcherFunc.name
     return {
-        filter: [`${switcherFunc.name}WorkFlow`.toLowerCase()],
-        html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${switcherFunc.name}</span><span class="b3-list-item__meta">WorkFlow</span></div>`,
-        id: `${switcherFunc.name}WorkFlow`,
+        filter: [`${name}WorkFlow`.toLowerCase()],
+        html: `<div class="b3-list-item__first"><span class="b3-list-item__text">${name}</span><span class="b3-list-item__meta">WorkFlow</span></div>`,
+        id: `${name}WorkFlow`,
         async callback(protyle: Protyle) {
             // await protyle.insert("ToDo")
             switcherFunc(protyle,workflowApi)

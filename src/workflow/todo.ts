@@ -234,9 +234,9 @@ export let todoWorkFlow:WorkFlow ={
     grouper:grouper,
     initer:initer,
     switcherList:[
-        reSolveSwitcherFunction(ToDo,workflowApi),
-        reSolveSwitcherFunction(Doing,workflowApi),
-        reSolveSwitcherFunction(Done,workflowApi),
-        reSolveSwitcherFunction(Delete,workflowApi)],
+        reSolveSwitcherFunction(ToDo,workflowApi,"ToDo"),
+        reSolveSwitcherFunction(Doing,workflowApi,"Doing"),
+        reSolveSwitcherFunction(Done,workflowApi,"Done"),
+        reSolveSwitcherFunction(Delete,workflowApi,"Delete"),],
     workFlowOrder:["doing","todo","done"]
 }
