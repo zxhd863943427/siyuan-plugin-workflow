@@ -52,9 +52,11 @@ let watcher:Watcher = function (wsDetail,api):number{
     let status:workflowAttr = JSON.parse(attr)
     let isFinish = element.getAttribute("class").includes("protyle-task--done")
     if((status.status === "todo" || status.status === "doing") && isFinish){
+        api.updateDock()
         return 1
     }
     if(status.status === "done" && !isFinish){
+        api.updateDock()
         return 2
     }
     else{
@@ -153,6 +155,7 @@ function ToDo(protyle:Protyle,api:WorkFlowApi){
     let workElement: Element = getWorkElement(currentElement, protyle, api)
     switchToUnFinish(workElement as HTMLElement)
     setWorkElementAttr(workElement, api, "todo")
+    api.updateDock()
 }
 function Doing(protyle:Protyle,api:WorkFlowApi){
     let currentElement = workflowApi.getProtyleCurrentElement(protyle)
@@ -164,6 +167,7 @@ function Doing(protyle:Protyle,api:WorkFlowApi){
     let workElement: Element = getWorkElement(currentElement, protyle, api)
     switchToUnFinish(workElement as HTMLElement)
     setWorkElementAttr(workElement, api, "doing")
+    api.updateDock()
 }
 
 function Done(protyle:Protyle,api:WorkFlowApi){
@@ -176,6 +180,7 @@ function Done(protyle:Protyle,api:WorkFlowApi){
     let workElement: Element = getWorkElement(currentElement, protyle, api);
     switchToFinish(workElement as HTMLElement)
     setWorkElementAttr(workElement, api, "done")
+    api.updateDock()
 }
 function Delete(protyle:Protyle,api:WorkFlowApi){
     let currentElement = workflowApi.getProtyleCurrentElement(protyle)
@@ -187,6 +192,7 @@ function Delete(protyle:Protyle,api:WorkFlowApi){
     let workElement: Element = getWorkElement(currentElement, protyle, api);
     switchToFinish(workElement as HTMLElement)
     setWorkElementAttr(workElement, api, "delete")
+    api.updateDock()
 }
 
 async function initer(searcher:string,api:WorkFlowApi){

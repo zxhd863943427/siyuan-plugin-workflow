@@ -1,6 +1,6 @@
 import { sql, getBlockAttrs,setBlockAttrs } from "./api";
 import { Lute } from "siyuan";
-import { getProtyleCurrentElement,turnIntoTask,getProtyleElementById } from "./workflow/utils";
+import { getProtyleCurrentElement,turnIntoTask,getProtyleElementById,updateDock } from "./workflow/utils";
 export let workflowApi = { 
     sql:sql, 
     getBlockAttrs:getBlockAttrs,
@@ -8,4 +8,6 @@ export let workflowApi = {
     newNodeID:window.Lute.NewNodeID,
     getProtyleCurrentElement:getProtyleCurrentElement,
     turnIntoTask:turnIntoTask,
-    getProtyleElementById: getProtyleElementById }
+    getProtyleElementById: getProtyleElementById,
+    updateDock: updateDock
+ }

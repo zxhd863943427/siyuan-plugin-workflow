@@ -103,7 +103,9 @@ type WorkFlowApi = { sql:Function,
     newNodeID:()=>string,
     getProtyleCurrentElement:Function,
     turnIntoTask:Function,
-    getProtyleElementById:Function}
+    getProtyleElementById:Function,
+    updateDock:Function
+}
 
 interface IProtyle {
     getInstance: () => import("../protyle").Protyle,

@@ -4,9 +4,10 @@
     import Block from "./block.svelte";
 
     import { workflowApi } from "@/workflowApi";
-    import { keys } from "ramda";
+    import {status} from "@/workflow/utils"
 
     export let workFlow: WorkFlow;
+    let _status:number;
     async function getGrouped(
         searcher: string,
         grouper: Grouper,
@@ -32,6 +33,10 @@
     function getWorkFlowGroupKeyList(grouped){
         return workFlow.workFlowOrder? workFlow.workFlowOrder:Object.keys(grouped)
     }
+    status.subscribe(value => {
+        _status = value;
+        update()
+    });
 </script>
 
 <div id="sevlte">

@@ -6,6 +6,7 @@ export let Lute = globalThis.Lute
 
 import { transaction, turnsIntoOneTransaction } from "./transaction"
 import { WorkFlowApi } from "@/types"
+import { writable } from "svelte/store"
 export function getParentElementById(dataId:string):Element|null{
     // let currentPage = getCurrentPage()
     let sourceElement = document.querySelector(`[data-node-id][data-type]:has(>div[data-node-id="${dataId}"][data-type])`)
@@ -170,4 +171,8 @@ export function switchToUnFinish(workElement:HTMLElement){
     if (workElement.classList.contains("protyle-task--done")){
         (workElement.querySelector(":scope > div.protyle-action.protyle-action--task") as HTMLElement).click()
     }
+}
+export let status = writable(0)
+export function updateDock(){
+    setTimeout(()=>{status.update(n=>n+1)},5000)
 }
