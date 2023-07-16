@@ -81,6 +81,7 @@ export default class PluginWorkflow extends Plugin {
     onLayoutReady() {
         this.loadData(STORAGE_NAME);
         console.log(`frontend: ${getFrontend()}; backend: ${getBackend()}`);
+        workflow.initer(workflow.searcher,workflowApi)
 
         this.addDock({
             config: {

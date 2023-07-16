@@ -14,7 +14,7 @@
     ) {
         let blockList = await sql(searcher);
         let grouped = grouper(blockList, api);
-        console.log(grouped);
+        // console.log(grouped);
         return grouped;
     }
     let groupedPromise = getGrouped(

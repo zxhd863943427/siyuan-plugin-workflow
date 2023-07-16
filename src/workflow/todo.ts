@@ -14,6 +14,7 @@ import { BlockList } from "net"
 import {groupBy} from "ramda"
 import { Protyle } from "siyuan"
 import { workflowApi } from "@/workflowApi"
+import { sql } from "@/api"
 
 
 
@@ -87,21 +88,34 @@ let operator = [
 
 
 let re = /custom-workflow\s*=\s*"((&#123;|\{).*(&#125;|\}))"/
-let groupFunc = groupBy((block:Block)=>{
-    let match = re.exec(block.ial)
-    if (!match){
-        return "undefined"
-    }
-    countain.innerHTML = match[1]
-    let attr:workflowAttr = JSON.parse(countain.innerText)
-    return attr.status
-})
+let groupFunc = groupBy(getToDoStatus)
 
 let grouper:Grouper = function(BlockList:Array<Block>,api):Partial<Record<"undefined" | "done" | "todo" | "doing" | "delete", Block[]>>{
     
     let grouped = groupFunc(BlockList)
     return grouped
 }
+
+function getToDoStatus(block: Block): "undefined" | "done" | "doing" | "todo" | "delete" {
+    let match = re.exec(block.ial)
+    if (!match) {
+        return "undefined"
+    }
+    countain.innerHTML = match[1]
+    let attr: workflowAttr = JSON.parse(countain.innerText)
+    return attr.status
+}
+
+function getToDoDate(block: Block): string {
+    let match = re.exec(block.ial)
+    if (!match) {
+        return "undefined"
+    }
+    countain.innerHTML = match[1]
+    let attr: workflowAttr = JSON.parse(countain.innerText)
+    return attr.date
+}
+
 
 function setWorkElementAttr(workElement: Element, api: WorkFlowApi, type: workflowAttr["status"]) {
     let taskElementId = workElement.getAttribute("data-node-id")
@@ -175,6 +189,29 @@ function Delete(protyle:Protyle,api:WorkFlowApi){
     setWorkElementAttr(workElement, api, "delete")
 }
 
+async function initer(searcher:string,api:WorkFlowApi){
+    let blockList = await sql(searcher);
+    let grouped = grouper(blockList, api);
+    // console.log(grouped);
+    if (!grouped["done"]){
+        return
+    }
+    let updateWorkFlowAttr: workflowAttr = {
+        date: api.newNodeID().slice(0, 8),
+        status: "delete"
+    }
+    let today = api.newNodeID().slice(0,8)
+    for(let block of grouped["done"]){
+        let blockDate = getToDoDate(block)
+        if (blockDate != today){
+            api.setBlockAttrs(block.id, {
+                "custom-workflow": JSON.stringify(updateWorkFlowAttr)
+            })
+        }
+    }
+    return grouped;
+}
+
 export let todoWorkFlow:WorkFlow ={
     watcher:watcher,
     operator:operator,
@@ -189,7 +226,7 @@ export let todoWorkFlow:WorkFlow ={
     a.value like '%done%'))
     );`,
     grouper:grouper,
-    initer:()=>{},
+    initer:initer,
     switcherList:[
         reSolveSwitcherFunction(ToDo,workflowApi),
         reSolveSwitcherFunction(Doing,workflowApi),
