@@ -10,7 +10,7 @@
         new Protyle(app,document.querySelector(`#${"workflow"+block.id}`), {
             blockId: block.id,
             render: {
-        gutter: false
+        gutter: true
     }
         })
     }
