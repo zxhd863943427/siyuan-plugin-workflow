@@ -121,11 +121,11 @@ export default class PluginWorkflow extends Plugin {
             }
         });
         let pannel = new SettingPannel({
-            target: dialog.element.querySelector("#workFlow"),
-            props:{
-                allWorkFlow:allWorkFlow,
-                option:workFlowOption
-            }
+            target: dialog.element.querySelector("#workFlowSettingPanel"),
+            // props:{
+            //     allWorkFlow:allWorkFlow,
+            //     option:workFlowOption
+            // }
         });
     }
 
